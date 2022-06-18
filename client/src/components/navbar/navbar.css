@@ -1,0 +1,31 @@
+.navbar {
+  width: 100%;
+  height: 80px;
+  background-color: #003580;
+  color: whitesmoke;
+
+  position: relative;
+}
+
+.navContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  color: rgb(218, 200, 173);
+}
+
+/* .navItems {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  justify-content: space-between;
+  align-items: center;
+} */
+
+.button {
+  /* text-decoration: none; */
+  color: aliceblue;
+}
