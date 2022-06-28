@@ -1,10 +1,11 @@
 import * as React from "react";
+import "./posts.css";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Avatar,
-  Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -12,19 +13,10 @@ import {
   CardMedia,
   Collapse,
   IconButton,
+  TextField,
   Typography,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
-// import Card from "@mui/material/Card";
-// import CardHeader from "@mui/material/CardHeader";
-// import CardMedia from "@mui/material/CardMedia";
-// import CardContent from "@mui/material/CardContent";
-// import CardActions from "@mui/material/CardActions";
-// import Collapse from "@mui/material/Collapse";
-// import Avatar from "@mui/material/Avatar";
-// import IconButton from "@mui/material/IconButton";
-// import Typography from "@mui/material/Typography";
-// import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -49,12 +41,54 @@ export default function RecipeReviewCard({ post }) {
     setExpanded(!expanded);
   };
 
+  //submitComment
+  const [cmnt, setCmnt] = useState("");
+  const [allComments, setAllComments] = useState([]);
+  const commentHandler = (e) => {
+    const value = e.target.value;
+    setCmnt(value);
+  };
+
+  // console.log(allComments);
+
+  const submitComment = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:5000/posts/api/comments", {
+      author: post.author,
+      id: post._id,
+      comment: cmnt,
+    });
+    setCmnt(" ");
+  };
+
+  //const allComments = axios.get("http://localhost:5000/posts/api/comments");
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      try {
+        await axios
+          .get("http://localhost:5000/posts/api/comments")
+          .then((res) => {
+            setAllComments(res.data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchComment();
+
+    //console.log(allComments);
+  }, [allComments]);
+
   //deleteIcon
   const deletePost = async () => {
     await axios.delete(`http://localhost:5000/posts/${post._id}`);
   };
 
   const [deleteIcon, setDeleteIcon] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -88,7 +122,7 @@ export default function RecipeReviewCard({ post }) {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {post.shortDesc}
+          {post.shortDesc.slice(0, 150)}...
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -111,25 +145,60 @@ export default function RecipeReviewCard({ post }) {
         <CardContent>
           <Typography paragraph>Details:</Typography>
           <Typography paragraph>{post.desc}</Typography>
+
+          {/* Comments section  */}
+          <hr />
           <Typography paragraph>Comments:</Typography>
 
-          <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-              <Typography
-                sx={{ fontSize: 10 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                {post.author}
-              </Typography>
+          {user && (
+            <div className="commentBox">
+              <TextField
+                id="outlined-size-small"
+                size="small"
+                label="Comment..."
+                name="comment"
+                multiline="true"
+                minRows="3"
+                onChange={commentHandler}
+                value={cmnt}
+                fontSize="5px"
 
-              <Typography variant="inherit">
-                {post.shortDesc}
-                <br />
-                {'"a benevolent smile"'}
-              </Typography>
-            </CardContent>
-          </Card>
+                // defaultValue="Hello World"
+              />
+              <Button
+                variant="contained"
+                size="small"
+                color="primary"
+                onClick={submitComment}
+              >
+                Submit
+              </Button>
+            </div>
+          )}
+          <br />
+          <br />
+
+          {allComments.map((comment) => {
+            return post._id === comment.commentId ? (
+              <Card sx={{ minWidth: 275 }} key={comment._id}>
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 10 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {comment.author}
+                  </Typography>
+
+                  <Typography variant="inherit">
+                    {comment.comment}
+                    <br />
+                    {'"a benevolent smile"'}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ) : null;
+          })}
 
           {/* <Typography paragraph>
             Heat 1/2 cup of the broth in a pot until simmering, add saffron and

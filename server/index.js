@@ -5,6 +5,7 @@ const cors = require("cors");
 dotenv.config();
 const mongoose = require("mongoose");
 const postMessage = require("./routes/posts");
+const user = require("./routes/user");
 
 const app = express();
 
@@ -12,10 +13,11 @@ app.get("/", (req, res) => {
   res.send("Hello World!!!");
 });
 app.use(express.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use("/posts", postMessage);
+app.use("/", user);
 
 //DATABASE CONNECTION
 

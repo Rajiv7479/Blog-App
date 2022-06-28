@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Blog = require("../modal/blogSchema");
+const Comment = require("../modal/commentSchema");
 
 //GET ALL POST
 
@@ -82,4 +83,39 @@ const updatePost = async (req, res) => {
   //  res.send("update the post");
 };
 
-module.exports = { getAllPost, getPost, createPost, deletePost, updatePost };
+//COMMENTS
+
+const createComment = async (req, res) => {
+  const cmnt = req.body;
+
+  const newComment = new Comment({
+    commentId: cmnt.id,
+    author: cmnt.author,
+    comment: cmnt.comment,
+  });
+  try {
+    const commented = await newComment.save();
+    res.status(200).json(commented);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const getAllComments = async (req, res) => {
+  try {
+    const allComments = await Comment.find();
+    res.status(200).json(allComments);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  getAllPost,
+  getPost,
+  createPost,
+  deletePost,
+  updatePost,
+  createComment,
+  getAllComments,
+};

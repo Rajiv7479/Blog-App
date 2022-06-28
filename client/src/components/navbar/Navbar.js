@@ -3,13 +3,15 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
 import "./navbar.css";
 
 export default function ButtonAppBar() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
@@ -29,16 +31,42 @@ export default function ButtonAppBar() {
             component="div"
             sx={{ flexGrow: 1 }}
           >
-            BLOG-APP
+            <Link to="/" className="button">
+              BLOG-APP
+            </Link>
           </Typography>
-          {/* <Link to="../../pages/login/Login">
-            <div>
+
+          {user ? (
+            <div className="loginBox">
+              <span
+                style={{
+                  fontSize: "17px",
+                  color: "yellow",
+                  fontWeight: "bold",
+                }}
+              >
+                {user.data.result.username}
+              </span>
+              <h5
+                onClick={() => {
+                  window.localStorage.clear();
+                }}
+                style={{
+                  fontSize: "17px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                }}
+              >
+                LogOut
+              </h5>
             </div>
-          </Link> */}
-          <Button className="button" color="inherit">
-            Login
-          </Button>
-          <Button color="inherit">Register</Button>
+          ) : (
+            <div className="loginBox">
+              <Link to="/login" className="button">
+                Sign In
+              </Link>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

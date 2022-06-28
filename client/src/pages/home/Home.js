@@ -10,9 +10,12 @@ import Posts from "../../components/posts/Posts";
 const Home = () => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/posts").then((res) => {
-      setPosts(res.data);
-    });
+    async function fetchData() {
+      await axios.get("http://localhost:5000/posts").then((res) => {
+        setPosts(res.data);
+      });
+    }
+    fetchData();
   }, [posts]);
   // console.log(posts);
 
@@ -23,14 +26,22 @@ const Home = () => {
   //   });
   // };
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <>
       <Navbar />
       <Container>
         <Grow in>
           <Container className="container">
-            <Grid container justify="space-between" spacing={3}>
-              <Grid item sm={12} md={8} spacing={10} className="postContainer">
+            <Grid container spacing={3}>
+              <Grid
+                item
+                sm={12}
+                md={user ? 8 : 12}
+                spacing={10}
+                className="postContainer"
+              >
                 {/* <h1>Welcome to Home!!</h1> */}
                 {posts.length > 0 ? (
                   posts.map((post) => {
