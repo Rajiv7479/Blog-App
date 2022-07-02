@@ -50,11 +50,11 @@ export default function RecipeReviewCard({ post }) {
   };
 
   // console.log(allComments);
-
+  const curr_user = JSON.parse(localStorage.getItem("user"));
   const submitComment = async (e) => {
     e.preventDefault();
     await axios.post("http://localhost:5000/posts/api/comments", {
-      author: post.author,
+      author: curr_user.data.result.fullname,
       id: post._id,
       comment: cmnt,
     });

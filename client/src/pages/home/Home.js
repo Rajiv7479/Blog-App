@@ -6,6 +6,7 @@ import { Container, Grid, Grow } from "@mui/material";
 import Form from "../../components/form/Form";
 import Navbar from "../../components/navbar/Navbar";
 import Posts from "../../components/posts/Posts";
+import Footer from "../../components/footer/Footer";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -63,6 +64,7 @@ const Home = () => {
           </Container>
         </Grow>
       </Container>
+      <Footer />
     </>
   );
 };

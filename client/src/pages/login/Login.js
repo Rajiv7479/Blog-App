@@ -83,7 +83,7 @@ export default function Login() {
   };
 
   return (
-    <Container>
+    <>
       <Navbar />
       <div className="loginPage">
         <Card sx={{ minWidth: 500 }} className="loginItems">
@@ -173,6 +173,6 @@ export default function Login() {
           )}
         </Card>
       </div>
-    </Container>
+    </>
   );
 }
