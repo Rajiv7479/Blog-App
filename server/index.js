@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use("/posts", postMessage);
-app.use("/", user);
+app.use("/user", user);
 
 //DATABASE CONNECTION
 

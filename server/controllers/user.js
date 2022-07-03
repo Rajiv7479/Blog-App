@@ -1,4 +1,5 @@
 const User = require("../modal/userSchema");
+const Blog = require("../modal/blogSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -49,4 +50,15 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser, loginUser };
+const getSpecificPost = async (req, res) => {
+  const { author } = req.params;
+  try {
+    const specificPost = await Blog.find({ author: author });
+    // console.log(specificPost);
+    res.status(200).json({ specificPost });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+module.exports = { createUser, loginUser, getSpecificPost };

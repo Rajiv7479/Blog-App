@@ -79,9 +79,11 @@ export default function ButtonAppBar() {
                 <li className="namelink">
                   {user.data.result.fullname.toUpperCase()}
                 </li>
-                <Link to={"./dashboard"} className="link">
-                  <li onClick={() => setMenuToggel(!menuToggel)}>Dashboard</li>
-                </Link>
+                <li onClick={() => setMenuToggel(!menuToggel)}>
+                  <Link to={"/user/dashboard"} className="link">
+                    Dashboard
+                  </Link>
+                </li>
                 <li
                   onClick={() => {
                     setMenuToggel(!menuToggel);

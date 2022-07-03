@@ -39,9 +39,11 @@ export default function Login() {
     if (!isLogin) {
       try {
         if (username && email && password && fullname) {
-          await axios.post("http://localhost:5000/register", formData);
+          await axios.post("http://localhost:5000/user/register", formData);
           navigate("/login");
-          console.log(formData);
+          alert("Sign Up Successfully!!");
+
+          // console.log(formData);
         } else {
           console.log("Please fill  all required filled!!!!");
         }
@@ -54,7 +56,10 @@ export default function Login() {
     else {
       try {
         if (formData.username && formData.password) {
-          let user = await axios.post("http://localhost:5000/login", formData);
+          let user = await axios.post(
+            "http://localhost:5000/user/login",
+            formData
+          );
           console.log(user);
           // setformData(initialData);
           setFormData(initialData);
