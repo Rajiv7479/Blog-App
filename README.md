@@ -1,3 +1,3 @@
 # Blog-App
 Full Stack MERN Project
-https://sri-blog-app.netlify.app/
+https://sri-blog-web-app.netlify.app/
