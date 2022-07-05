@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "./navbar.css";
 import { Avatar } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
@@ -88,6 +88,7 @@ export default function ButtonAppBar() {
                   onClick={() => {
                     setMenuToggel(!menuToggel);
                     window.localStorage.clear();
+                    Navigate("/posts");
                   }}
                 >
                   LogOut

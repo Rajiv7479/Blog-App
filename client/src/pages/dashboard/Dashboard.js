@@ -1,4 +1,4 @@
-import { Grid, Grow } from "@mui/material";
+import { CircularProgress, Grid, Grow } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
@@ -16,14 +16,14 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`http://localhost:5000/user/dashboard/${author}`)
+        .get(`https://blog-app2k22.herokuapp.com/user/dashboard/${author}`)
         .then((res) => {
           setPosts(res.data.specificPost);
         });
     }
     //console.log(userId);
     fetchData();
-  }, []);
+  }, [posts]);
 
   console.log(posts);
 
@@ -41,17 +41,17 @@ const Dashboard = () => {
             <h1 style={{ color: "green" }}>Welcome to Dashboard!!</h1>
 
             <Grid container spacing={2}>
-              <Grid item xs={12} className="container">
+              <Grid item xs={12} rowGap={5} className="post">
                 {posts.length > 0 ? (
                   posts.map((post) => {
                     return (
-                      <div key={post._id} className="post">
+                      <Grid item xs={12} md={6} key={post._id} className="post">
                         <Posts post={post} />
-                      </div>
+                      </Grid>
                     );
                   })
                 ) : (
-                  <h1>No Post Found!!!</h1>
+                  <h2>No Post Found!!!</h2>
                 )}
               </Grid>
             </Grid>

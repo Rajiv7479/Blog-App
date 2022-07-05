@@ -9,6 +9,7 @@
 }
 .postContainer {
   background-color: antiquewhite;
+  margin-left: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -16,6 +17,11 @@
   padding-bottom: 40px;
 }
 
+.formContainer {
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+}
 /* .postContainer {
   position: absolute;
   display: flex;
@@ -31,4 +37,10 @@
   justify-content: center;
   align-items: center;
   margin: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+  .postContainer {
+    background-color: transparent;
+  }
 }
